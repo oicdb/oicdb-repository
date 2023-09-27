@@ -1,0 +1,45 @@
+name: Build oicdb repository
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - uses: actions/checkout@v4
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          working_dir: scripts
+          dev: no
+
+      - name: Run oicdb build script
+        run: ./testAndBuild.php
+        working-directory: scripts
+
+      - name: Upload oicdb.json as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: oicdb-dev.json
+          path: build/oicdb-dev.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automatically build oicdb.json
+          file_pattern: "build/oicdb-dev.json"

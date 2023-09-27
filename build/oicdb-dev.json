@@ -1,0 +1,307 @@
+{
+  "name": "Open Invoice Collector DB",
+  "version": "20230927164457-30ca54c11d8a18172001a2efc912a66736ba59b9",
+  "recipes": [
+    {
+  "provider": "hetzner",
+  "domains": [
+    "accounts.hetzner.com",
+    "hetzner.com"
+  ],
+  "version": "1695833008-f9e0aea35390011cb6eba1755ea9feeaf184abaf",
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/login",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#_username",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "#_password",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "#submit-login",
+      "description": "Click login form submit button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "#input-verify-code",
+      "description": "Wait for the 2FA code input field.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "type",
+      "selector": "#input-verify-code",
+      "value": "{{ totp }}",
+      "description": "Insert the 2FA code (if required)",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "click",
+      "selector": "#btn-submit",
+      "description": "Click 2FA form submit button.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second."
+    },
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/invoice",
+      "description": "Open the billing page."
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second"
+    },
+    {
+      "action": "downloadAll",
+      "selector": "ul.invoice-list > li > div > div > div > div > a",
+      "description": "Click all PDF links and download invoices."
+    },
+    {
+      "action": "move",
+      "value": ".*.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/logout",
+      "description": "Logout from the account."
+    }
+  ]
+},
+    {
+  "provider": "telekom-business-rechnungonline",
+  "domains": [
+    "rechnungonline.geschaeftskunden.telekom.de"
+  ],
+  "version": "1695833008-f1325f3b234acb398761618be49cdaae4fda53f5",
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://rechnungonline.geschaeftskunden.telekom.de/gk/auth",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#labelFor_name_ID",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "#labelFor_password_ID",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "#command > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(3) > input.input-submit",
+      "description": "Click login form submit button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "table.spreadsheet",
+      "description": "Wait for invoice table"
+    },
+    {
+      "action": "click",
+      "selector": "#doMsgForm > table > tbody > tr:nth-child(1) > td:nth-child(2) > a",
+      "description": "Click latest invoice link."
+    },
+    {
+      "action": "downloadAll",
+      "selector": "#navigationDIV > div > div > div > ul > li.open > ul > li > ul > li:nth-child(6)",
+      "description": "Download invoices."
+    },
+    {
+      "action": "transform",
+      "value": "unzip",
+      "description": "Unzip invoices."
+    },
+    {
+      "action": "move",
+      "value": ".*.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "click",
+      "selector": "#head-menu > li:nth-child(3) > a",
+      "description": "Click logout button."
+    }
+  ]
+},
+    {
+  "provider": "digitalocean",
+  "domains": [
+    "cloud.digitalocean.com",
+    "app.digitalocean.com"
+  ],
+  "version": "1695833008-59be1e33af87f6b232cfe0a840e07b2453709f74",
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://cloud.digitalocean.com/login",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#email",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "#password",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "#root > div > div:nth-child(1) > div > div > div > div > div > div > form > button",
+      "description": "Click login form submit button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "#code",
+      "description": "Wait for the 2FA code input field.",
+      "when": {
+        "url": "https://cloud.digitalocean.com/login"
+      }
+    },
+    {
+      "action": "type",
+      "selector": "#code",
+      "value": "{{ totp }}",
+      "description": "Insert the 2FA code (if required)",
+      "when": {
+        "url": "https://cloud.digitalocean.com/login"
+      }
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait for 1 second to avoid 2fa form issues."
+    },
+    {
+      "action": "click",
+      "selector": "#root > div > div:nth-child(1) > div > div > div > div > div > form > button",
+      "description": "Click 2FA form submit button.",
+      "when": {
+        "url": "https://cloud.digitalocean.com/login"
+      }
+    },
+    {
+      "action": "waitFor",
+      "selector": ".avatar-small",
+      "description": "Wait for the avatar image"
+    },
+    {
+      "action": "open",
+      "url": "https://cloud.digitalocean.com/account/billing",
+      "description": "Open the billing page."
+    },
+    {
+      "action": "downloadAll",
+      "selector": "#history tbody tr td:nth-child(4) a:nth-child(1)",
+      "filterUrlsWith": "https://cloud.digitalocean.com/v2/customers/(.*)/invoices/(.*)/pdf",
+      "description": "Click PDF links."
+    },
+    {
+      "action": "move",
+      "value": ".*\\sInvoice\\s.*.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "open",
+      "url": "https://cloud.digitalocean.com/logout",
+      "description": "Logout from the account."
+    }
+  ]
+},
+    {
+  "provider": "tesla",
+  "domains": [
+    "tesla.com",
+    "auth.tesla.com"
+  ],
+  "version": "1695833008-fbf8a532467f1464d5252ef9b515e6435139889b",
+  "type": "client",
+  "steps": [
+    {
+      "action": "oauth2-setup",
+      "oauth2": {
+        "authUrl": "https://auth.tesla.com/oauth2/v3/authorize",
+        "tokenUrl": "https://auth.tesla.com/oauth2/v3/token",
+        "redirectUrl": "https://auth.tesla.com/void/callback",
+        "clientId": "ownerapi",
+        "scope": "openid email offline_access",
+        "pkceMethod": "S256",
+        "pkceVerifierLength": 68
+      }
+    },
+    {
+      "action": "oauth2-check-tokens",
+      "description": "Check if Oauth2 tesla access token is still valid"
+    },
+    {
+      "action": "oauth2-authenticate",
+      "description": "Login and request new api token from Tesla."
+    },
+    {
+      "action": "oauth2-post-and-get-items",
+      "description": "Get all invoices from Tesla api.",
+      "url": "https://akamai-apigateway-charging-ownership.tesla.com/graphql?deviceLanguage=de&deviceCountry=DE&ttpLocale=de_DE&operationName=getChargingHistoryV2",
+      "body": "{\n    \"query\": \"\\n    query getChargingHistoryV2($pageNumber: Int!, $sortBy: String, $sortOrder: SortByEnum) {\\n  me {\\n    charging {\\n      historyV2(pageNumber: $pageNumber, sortBy: $sortBy, sortOrder: $sortOrder) {\\n        data {\\n          ...SparkHistoryItemFragment\\n        }\\n        totalResults\\n        hasMoreData\\n        pageNumber\\n      }\\n    }\\n  }\\n}\\n    \\n    fragment SparkHistoryItemFragment on SparkHistoryItem {\\n  countryCode\\n  programType\\n  billingType\\n  vin\\n  isMsp\\n  credit {\\n    distance\\n    distanceUnit\\n  }\\n  chargingPackage {\\n    distance\\n    distanceUnit\\n    energyApplied\\n  }\\n  chargingVoucher {\\n    voucherValue\\n  }\\n  invoices {\\n    fileName\\n    contentId\\n    invoiceType\\n  }\\n  chargeSessionId\\n  siteLocationName\\n  chargeStartDateTime\\n  chargeStopDateTime\\n  unlatchDateTime\\n  fees {\\n    ...SparkHistoryFeeFragment\\n  }\\n  vehicleMakeType\\n  sessionId\\n  surveyCompleted\\n  surveyType\\n  postId\\n  cabinetId\\n  din\\n  isDcEnforced\\n}\\n    \\n    fragment SparkHistoryFeeFragment on SparkHistoryFee {\\n  sessionFeeId\\n  feeType\\n  payorUid\\n  amountDue\\n  currencyCode\\n  pricingType\\n  usageBase\\n  usageTier1\\n  usageTier2\\n  usageTier3\\n  usageTier4\\n  rateBase\\n  rateTier1\\n  rateTier2\\n  rateTier3\\n  rateTier4\\n  totalTier1\\n  totalTier2\\n  totalTier3\\n  totalTier4\\n  uom\\n  isPaid\\n  uid\\n  totalBase\\n  totalDue\\n  netDue\\n  status\\n}\\n    \",\n    \"variables\": {\n        \"sortBy\": \"start_datetime\",\n        \"sortOrder\": \"DESC\",\n        \"pageNumber\": 1\n    },\n    \"operationName\": \"getChargingHistoryV2\"\n}",
+      "headers": {
+        "User-Agent": "Tesla/1931 CFNetwork/1474 Darwin/23.0.0",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer {{ token }}",
+        "x-tesla-user-agent": "TeslaApp/4.24.5/undefined/ios/17.0"
+      },
+      "extractDocumentIds": "data.me.charging.historyV2.data.invoices.contentId",
+      "extractDocumentFilenames": "data.me.charging.historyV2.data.invoices.fileName",
+      "documentUrl": "https://ownership.tesla.com/mobile-app/charging/invoice/{{ id }}?deviceCountry=DE&deviceLanguage=de&ttpLocale=de_DE",
+      "documentRequestMethod": "GET",
+      "documentRequestHeaders": {
+        "User-Agent": "Tesla/1931 CFNetwork/1474 Darwin/23.0.0",
+        "x-tesla-user-agent": "TeslaApp/4.24.5/undefined/ios/17.0",
+        "Authorization": "Bearer {{ token }}",
+        "Accept": "application/pdf"
+      }
+    }
+  ]
+}
+  ]
+}

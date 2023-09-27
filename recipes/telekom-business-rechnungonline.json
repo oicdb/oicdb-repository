@@ -1,0 +1,61 @@
+{
+  "provider": "telekom-business-rechnungonline",
+  "domains": [
+    "rechnungonline.geschaeftskunden.telekom.de"
+  ],
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://rechnungonline.geschaeftskunden.telekom.de/gk/auth",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#labelFor_name_ID",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "#labelFor_password_ID",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "#command > div:nth-child(1) > div:nth-child(2) > ul > li:nth-child(3) > input.input-submit",
+      "description": "Click login form submit button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "table.spreadsheet",
+      "description": "Wait for invoice table"
+    },
+    {
+      "action": "click",
+      "selector": "#doMsgForm > table > tbody > tr:nth-child(1) > td:nth-child(2) > a",
+      "description": "Click latest invoice link."
+    },
+    {
+      "action": "downloadAll",
+      "selector": "#navigationDIV > div > div > div > ul > li.open > ul > li > ul > li:nth-child(6)",
+      "description": "Download invoices."
+    },
+    {
+      "action": "transform",
+      "value": "unzip",
+      "description": "Unzip invoices."
+    },
+    {
+      "action": "move",
+      "value": ".*.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "click",
+      "selector": "#head-menu > li:nth-child(3) > a",
+      "description": "Click logout button."
+    }
+  ]
+}

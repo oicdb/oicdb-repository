@@ -1,0 +1,95 @@
+{
+  "provider": "hetzner",
+  "domains": [
+    "accounts.hetzner.com",
+    "hetzner.com"
+  ],
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/login",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#_username",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "#_password",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "#submit-login",
+      "description": "Click login form submit button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "#input-verify-code",
+      "description": "Wait for the 2FA code input field.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "type",
+      "selector": "#input-verify-code",
+      "value": "{{ totp }}",
+      "description": "Insert the 2FA code (if required)",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "click",
+      "selector": "#btn-submit",
+      "description": "Click 2FA form submit button.",
+      "when": {
+        "url": "https://accounts.hetzner.com/2fa"
+      }
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second."
+    },
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/invoice",
+      "description": "Open the billing page."
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait a second"
+    },
+    {
+      "action": "downloadAll",
+      "selector": "ul.invoice-list > li > div > div > div > div > a",
+      "description": "Click all PDF links and download invoices."
+    },
+    {
+      "action": "move",
+      "value": ".*.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "open",
+      "url": "https://accounts.hetzner.com/logout",
+      "description": "Logout from the account."
+    }
+  ]
+}

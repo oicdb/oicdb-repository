@@ -21,32 +21,34 @@ $output = '';
 $numErrors = 0;
 $numRecipes = 0;
 while (false !== ($filename = readdir($handle))) {
-    if ($filename !== "." && $filename !== "..") {
-        $output .= "Validating: $filename";
-        $recipe = file_get_contents(PATH .'/recipes/' . $filename);
-        $lastGitChangeTimestamp = '';
-        exec('git log -1 --pretty="format:%at" -- ' . PATH . '/recipes/' . $filename, $lastGitChangeTimestamp);
-        $version = $lastGitChangeTimestamp[0] . '-' . sha1($recipe);
-        $recipe = str_replace('"type":', '"version": "' . $version . '",' . "\n" . '  "type":', $recipe);
-        $content = str_replace('"recipes": []', '"recipes": [' . $recipe . ']', $repositoryTemplate);
-        if ($numRecipes > 0) {
-            $contentRecipes .= ",\n";
-        }
-        $contentRecipes .= '    ' . $recipe;
-        $data = json_decode($content, false);
-        $validator = new JsonSchema\Validator;
-        $validator->validate($data, (object)['$ref' => 'file://' . PATH . '/schema/oicdb.schema.json']);
-        if ($validator->isValid()) {
-            $output .= " - OK\n";
-        } else {
-            $output .= " - ERROR\n";
-            foreach ($validator->getErrors() as $error) {
-                $output = sprintf("[%s] %s\n", $error['property'], $error['message']);
-                ++$numErrors;
-            }
-        }
-        ++$numRecipes;
+    if ($filename === "." || $filename === "..") {
+        continue;
     }
+
+    $output .= "Validating: $filename";
+    $recipe = file_get_contents(PATH .'/recipes/' . $filename);
+    $lastGitChangeTimestamp = '';
+    exec('git log -1 --pretty="format:%at" -- ' . PATH . '/recipes/' . $filename, $lastGitChangeTimestamp);
+    $version = $lastGitChangeTimestamp[0] . '-' . sha1($recipe);
+    $recipe = str_replace('"type":', '"version": "' . $version . '",' . "\n" . '  "type":', $recipe);
+    $content = str_replace('"recipes": []', '"recipes": [' . $recipe . ']', $repositoryTemplate);
+    if ($numRecipes > 0) {
+        $contentRecipes .= ",\n";
+    }
+    $contentRecipes .= '    ' . $recipe;
+    $data = json_decode($content, false);
+    $validator = new JsonSchema\Validator;
+    $validator->validate($data, (object)['$ref' => 'file://' . PATH . '/schema/oicdb.schema.json']);
+    if ($validator->isValid()) {
+        $output .= " - OK\n";
+    } else {
+        $output .= " - ERROR\n";
+        foreach ($validator->getErrors() as $error) {
+            $output = sprintf("[%s] %s\n", $error['property'], $error['message']);
+            ++$numErrors;
+        }
+    }
+    ++$numRecipes;
 }
 
 closedir($handle);

@@ -11,7 +11,7 @@ if (count($argv) > 1) {
     $oicdbVersion = $argv[1];
 }
 
-$recipeDirectoryPath = PATH . '/recipes1/';
+$recipeDirectoryPath = PATH . '/recipes/';
 $handle = opendir($recipeDirectoryPath);
 if (!$handle) {
     throw new \RuntimeException(sprintf('Directory %s could not be opened', $recipeDirectoryPath));

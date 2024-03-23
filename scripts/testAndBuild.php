@@ -25,6 +25,8 @@ while (false !== ($filename = readdir($handle))) {
         continue;
     }
 
+    // Reading recipe and determining the current version
+    // The last git change timestamp is used as a version string
     $recipeFilePath = PATH . '/recipes/' . $filename;
     $output .= "Validating: $filename";
     $recipe = file_get_contents($recipeFilePath);
@@ -37,15 +39,17 @@ while (false !== ($filename = readdir($handle))) {
         $contentRecipes .= ",\n";
     }
     $contentRecipes .= '    ' . $recipe;
+
+    // JSON Schema validation for a single recipe
     $data = json_decode($content, false);
-    $validator = new JsonSchema\Validator;
+    $validator = new JsonSchema\Validator();
     $validator->validate($data, (object)['$ref' => 'file://' . PATH . '/schema/oicdb.schema.json']);
     if ($validator->isValid()) {
-        $output .= " - OK\n";
+        $output .= " - OK" . PHP_EOL;
     } else {
-        $output .= " - ERROR\n";
+        $output .= " - ERROR" . PHP_EOL;
         foreach ($validator->getErrors() as $error) {
-            $output = sprintf("[%s] %s\n", $error['property'], $error['message']);
+            $output = sprintf("[%s] %s" . PHP_EOL, $error['property'], $error['message']);
             ++$numErrors;
         }
     }
@@ -54,12 +58,12 @@ while (false !== ($filename = readdir($handle))) {
 
 closedir($handle);
 if ($numErrors > 0) {
-    echo "Found $numErrors errors\n";
+    echo "Found $numErrors errors" . PHP_EOL;
     echo $output;
     throw new \RuntimeException(sprintf('Found %s errors', $numErrors));
 }
 
-echo "Build finished succesfully\n";
+echo "Build finished succesfully" . PHP_EOL;
 echo $output;
 $hash = sha1($contentRecipes);
 

@@ -67,7 +67,7 @@ echo "Build finished succesfully" . PHP_EOL;
 echo $output;
 $hash = sha1($contentRecipes);
 
-//Create build directory
+// Create build directory
 $dir = PATH . '/build';
 if (!is_dir($dir)) {
     if (!mkdir($dir) && !is_dir($dir)) {
@@ -75,14 +75,15 @@ if (!is_dir($dir)) {
     }
 }
 
-//Normal build
+// Normal build
 if (strlen($oicdbVersion) <= 0) {
     $oicdbVersion = date('YmdHis') . '-' . $hash;
     $content = str_replace('###VERSION###', $oicdbVersion, $repositoryTemplate);
     $content = str_replace('"recipes": []', '"recipes": [' . "\n" . $contentRecipes . "\n" . '  ]', $content);
     file_put_contents(PATH . '/build/oicdb-dev.json', $content);
+
 } else {
-    //Release version
+    // Release version
     $content = str_replace('###VERSION###', $oicdbVersion, $repositoryTemplate);
     $content = str_replace('"recipes": []', '"recipes": [' . "\n" . $contentRecipes . "\n" . '  ]', $content);
     file_put_contents(PATH . '/build/oicdb-' . $oicdbVersion. '.json', $content);

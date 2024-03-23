@@ -25,10 +25,11 @@ while (false !== ($filename = readdir($handle))) {
         continue;
     }
 
+    $recipeFilePath = PATH . '/recipes/' . $filename;
     $output .= "Validating: $filename";
-    $recipe = file_get_contents(PATH .'/recipes/' . $filename);
+    $recipe = file_get_contents($recipeFilePath);
     $lastGitChangeTimestamp = '';
-    exec('git log -1 --pretty="format:%at" -- ' . PATH . '/recipes/' . $filename, $lastGitChangeTimestamp);
+    exec('git log -1 --pretty="format:%at" -- ' . escapeshellarg($recipeFilePath), $lastGitChangeTimestamp);
     $version = $lastGitChangeTimestamp[0] . '-' . sha1($recipe);
     $recipe = str_replace('"type":', '"version": "' . $version . '",' . "\n" . '  "type":', $recipe);
     $content = str_replace('"recipes": []', '"recipes": [' . $recipe . ']', $repositoryTemplate);

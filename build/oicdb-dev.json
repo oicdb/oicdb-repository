@@ -1,6 +1,6 @@
 {
   "name": "Open Invoice Collector DB",
-  "version": "20240324103403-f6e5ad1e69ccb4285cbe41789669564dfdf82188",
+  "version": "20240324103611-1bd1c622c43e5a291b168dc1614aa23e0afac07d",
   "recipes": [
     {
   "provider": "hetzner",
@@ -8,7 +8,7 @@
     "accounts.hetzner.com",
     "hetzner.com"
   ],
-  "version": "1711276410-f9e0aea35390011cb6eba1755ea9feeaf184abaf",
+  "version": "1711276549-f9e0aea35390011cb6eba1755ea9feeaf184abaf",
   "type": "browser",
   "steps": [
     {
@@ -103,7 +103,7 @@
   "domains": [
     "rechnungonline.geschaeftskunden.telekom.de"
   ],
-  "version": "1711276410-f1325f3b234acb398761618be49cdaae4fda53f5",
+  "version": "1711276549-f1325f3b234acb398761618be49cdaae4fda53f5",
   "type": "browser",
   "steps": [
     {
@@ -166,7 +166,7 @@
     "cloud.digitalocean.com",
     "app.digitalocean.com"
   ],
-  "version": "1711276410-59be1e33af87f6b232cfe0a840e07b2453709f74",
+  "version": "1711276549-59be1e33af87f6b232cfe0a840e07b2453709f74",
   "type": "browser",
   "steps": [
     {
@@ -255,7 +255,7 @@
     "tesla.com",
     "auth.tesla.com"
   ],
-  "version": "1711276410-fbf8a532467f1464d5252ef9b515e6435139889b",
+  "version": "1711276549-fbf8a532467f1464d5252ef9b515e6435139889b",
   "type": "client",
   "steps": [
     {

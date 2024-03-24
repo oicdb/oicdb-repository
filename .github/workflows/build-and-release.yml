@@ -51,7 +51,7 @@ jobs:
           file_pattern: "build/oicdb-${{ env.RELEASE_VERSION }}.json build/oicdb-latest.json"
 
       - name: Attach oicdb repository to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: build/oicdb-${{ env.RELEASE_VERSION }}.json
           tag_name: ${{ env.RELEASE_VERSION }}

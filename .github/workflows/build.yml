@@ -34,7 +34,7 @@ jobs:
         working-directory: scripts
 
       - name: Upload oicdb.json as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: oicdb-dev.json
           path: build/oicdb-dev.json

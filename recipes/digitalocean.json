@@ -12,6 +12,21 @@
       "description": "Open the login page."
     },
     {
+      "action": "waitFor",
+      "selector": "div.truste_overlay",
+      "description": "Wait for consent overlay to appear."
+    },
+    {
+      "action": "removeElement",
+      "selector": "div.truste_overlay",
+      "description": "Remove consent overlay"
+    },
+    {
+      "action": "removeElement",
+      "selector": "div.truste_box_overlay",
+      "description": "Remove consent overlay box"
+    },
+    {
       "action": "type",
       "selector": "#email",
       "value": "{{ username }}",
@@ -65,12 +80,13 @@
     },
     {
       "action": "open",
-      "url": "https://cloud.digitalocean.com/account/billing",
+      "url": "https://cloud.digitalocean.com/account/billing/history",
       "description": "Open the billing page."
     },
     {
       "action": "downloadAll",
-      "selector": "#history tbody tr td:nth-child(4) a:nth-child(1)",
+      "selector": "//a[contains(text(), 'Invoice for')]/ancestor::div[@data-testid='billing-history-entry-row']/descendant::div[contains(@role, 'button')]",
+      "value": "/following-sibling::div[1]//div[contains(., 'Download PDF')]",
       "filterUrlsWith": "https://cloud.digitalocean.com/v2/customers/(.*)/invoices/(.*)/pdf",
       "description": "Click PDF links."
     },

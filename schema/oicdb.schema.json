@@ -93,6 +93,7 @@
             "click",
             "waitFor",
             "sleep",
+            "removeElement",
             "type",
             "transform",
             "move",

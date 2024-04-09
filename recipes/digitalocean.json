@@ -87,7 +87,6 @@
       "action": "downloadAll",
       "selector": "//a[contains(text(), 'Invoice for')]/ancestor::div[@data-testid='billing-history-entry-row']/descendant::div[contains(@role, 'button')]",
       "value": "/following-sibling::div[1]//div[contains(., 'Download PDF')]",
-      "filterUrlsWith": "https://cloud.digitalocean.com/v2/customers/(.*)/invoices/(.*)/pdf",
       "description": "Click PDF links."
     },
     {

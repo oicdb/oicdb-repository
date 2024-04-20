@@ -1,0 +1,67 @@
+{
+  "provider": "grammarly",
+  "domains": [
+    "grammarly.com",
+    "www.grammarly.com"
+  ],
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://www.grammarly.com/signin",
+      "description": "Open the login page."
+    },
+    {
+      "action": "type",
+      "selector": "#email",
+      "value": "{{ username }}",
+      "description": "Insert the email."
+    },
+    {
+      "action": "click",
+      "selector": "button[data-qa=\"btnLogin\"]",
+      "description": "Click login form continue button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "#password",
+      "description": "Wait for the password input field."
+    },
+    {
+      "action": "sleep",
+      "value": "2",
+      "description": "Wait for 2 seconds until password field is visible."
+    },
+    {
+      "action": "type",
+      "selector": "#password",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "click",
+      "selector": "button[data-qa=\"btnLogin\"]",
+      "description": "Click login form continue button."
+    },
+    {
+      "action": "waitFor",
+      "selector": "div[data-name=\"logout-lnk\"]",
+      "description": "Wait for logout link to appear"
+    },
+    {
+      "action": "open",
+      "url": "https://account.grammarly.com/subscription",
+      "description": "Open the subscription page."
+    },
+    {
+      "action": "downloadAll",
+      "selector": "section[data-qa=\"billingHistoryPayments\"] div[data-name=\"download.single.receipt\"]",
+      "description": "Click all PDF links and download invoices."
+    },
+    {
+      "action": "move",
+      "value": ".*receipt.pdf",
+      "description": "Move invoice pdfs."
+    }
+  ]
+}

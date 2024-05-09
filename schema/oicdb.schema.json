@@ -105,6 +105,19 @@
             "oauth2-post-and-get-items"
           ]
         },
+        "selectorType": {
+          "type": "string",
+          "minLength": 1,
+          "enum": [
+            "JSPath",
+            "Search",
+            "Query",
+            "Func",
+            "ID",
+            "NodeID",
+            "QueryAll"
+          ]
+        },
         "when": {
           "$refs": "#/definitions/stepCondition"
         }
@@ -155,6 +168,10 @@
           "$refs": "#/definitions/stepCondition"
         },
         "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selectorType": {
           "type": "string",
           "minLength": 1
         },

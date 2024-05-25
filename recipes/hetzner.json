@@ -1,5 +1,5 @@
 {
-  "provider": "hetzner",
+  "supplier": "hetzner",
   "domains": [
     "accounts.hetzner.com",
     "hetzner.com"

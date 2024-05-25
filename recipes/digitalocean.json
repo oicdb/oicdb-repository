@@ -1,5 +1,5 @@
 {
-  "provider": "digitalocean",
+  "supplier": "digitalocean",
   "domains": [
     "cloud.digitalocean.com",
     "app.digitalocean.com"

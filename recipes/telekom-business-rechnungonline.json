@@ -1,5 +1,5 @@
 {
-  "provider": "telekom-business-rechnungonline",
+  "supplier": "telekom-business-rechnungonline",
   "domains": [
     "rechnungonline.geschaeftskunden.telekom.de"
   ],

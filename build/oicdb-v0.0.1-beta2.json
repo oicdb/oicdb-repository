@@ -3,7 +3,7 @@
   "version": "v0.0.1-beta2",
   "recipes": [
     {
-  "provider": "digitalocean",
+  "supplier": "digitalocean",
   "domains": [
     "cloud.digitalocean.com",
     "app.digitalocean.com"
@@ -109,7 +109,7 @@
 }
 ,
     {
-  "provider": "telekom-business-rechnungonline",
+  "supplier": "telekom-business-rechnungonline",
   "domains": [
     "rechnungonline.geschaeftskunden.telekom.de"
   ],
@@ -171,7 +171,7 @@
   ]
 },
     {
-  "provider": "hetzner",
+  "supplier": "hetzner",
   "domains": [
     "accounts.hetzner.com",
     "hetzner.com"
@@ -267,7 +267,7 @@
   ]
 },
     {
-  "provider": "tesla",
+  "supplier": "tesla",
   "domains": [
     "tesla.com",
     "auth.tesla.com"

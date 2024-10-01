@@ -1,0 +1,85 @@
+{
+  "supplier": "vodafone-de-private",
+  "domains": [
+    "vodafone.de",
+    "www.vodafone.de"
+  ],
+  "type": "browser",
+  "steps": [
+    {
+      "action": "open",
+      "url": "https://www.vodafone.de/meinvodafone/account/login",
+      "description": "Open the login page."
+    },
+    {
+      "action": "removeElement",
+      "selector": "#dip-consent",
+      "description": "Remove consent overlay"
+    },
+    {
+      "action": "type",
+      "selector": "document.querySelector(\"input#txtUsername\")",
+      "selectorType": "JSPath",
+      "value": "{{ username }}",
+      "description": "Insert the username."
+    },
+    {
+      "action": "type",
+      "selector": "document.querySelector(\"input#txtPassword\")",
+      "selectorType": "JSPath",
+      "value": "{{ password }}",
+      "description": "Insert the password."
+    },
+    {
+      "action": "sleep",
+      "value": "1",
+      "description": "Wait for 1 second."
+    },
+    {
+      "action": "click",
+      "selector": "document.querySelector(\"#loginCredintialsId > div > div > div.pt-20 > button\")",
+      "selectorType": "JSPath",
+      "description": "Submit login form using the login button."
+    },
+
+    {
+      "action": "waitFor",
+      "selector": "document.querySelector(\"dashboard-menu\")",
+      "selectorType": "JSPath",
+      "description": "Wait for the dashboard menu"
+    },
+    {
+      "action": "open",
+      "url": "https://www.vodafone.de/meinvodafone/services/ihre-rechnungen/rechnungen",
+      "description": "Open the billing page."
+    },
+    {
+      "action": "removeElement",
+      "selector": "#dip-consent",
+      "description": "Remove consent overlay"
+    },
+    {
+      "action": "waitFor",
+      "selector": "document.querySelector(\"#billoverviewWrapperId\")",
+      "selectorType": "JSPath",
+      "description": "Wait for the billing history"
+    },
+    {
+      "action": "downloadAll",
+      "selector": "#billoverviewWrapperId > bill-overview-history > bill-history > div > div.full-page.mb-0.pb-0 > div > div > div > div.table-container > vf-table-brix > div.ws10-hybrid-table.ws10-hybrid-table__tablet-small > table > tbody > tr",
+      "selectorType": "JSPath",
+      "value": "td:nth-child(4) > div > span:nth-child(2) > svg",
+      "description": "Click PDF invoice links."
+    },
+    {
+      "action": "move",
+      "value": "[0-9_-]*Rechnung.*\\.pdf",
+      "description": "Move invoice pdfs."
+    },
+    {
+      "action": "open",
+      "url": "https://www.vodafone.de/logout",
+      "description": "Logout from the account."
+    }
+  ]
+}

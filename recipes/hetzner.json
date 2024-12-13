@@ -78,7 +78,7 @@
     },
     {
       "action": "downloadAll",
-      "selector": "ul.invoice-list > li > div > div > div > div > a",
+      "selector": "ul.invoice-list > li > div > div > div > div > a.btn-download",
       "description": "Click all PDF links and download invoices."
     },
     {

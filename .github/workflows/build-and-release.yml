@@ -45,7 +45,7 @@ jobs:
           name: oicdb-${{ env.RELEASE_VERSION }}.json
           path: build/oicdb-${{ env.RELEASE_VERSION }}.json
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: Automatically build oicdb-${{ env.RELEASE_VERSION }}.json
           file_pattern: "build/oicdb-${{ env.RELEASE_VERSION }}.json build/oicdb-latest.json"
